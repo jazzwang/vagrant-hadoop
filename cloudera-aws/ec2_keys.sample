@@ -1,5 +1,0 @@
-export V_AWS_ACCESS_KEY_ID=
-export V_AWS_SECRET_ACCESS_KEY=
-export V_KEYPAIR_NAME=
-export V_KEYPAIR_PATH=
-export V_SEC_GROUPS=
