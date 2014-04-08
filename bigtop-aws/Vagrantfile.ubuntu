@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
     ## Red Hat Enterprise Linux 6.4 (PV) - ami-80bbf3d2 (64-bit)
     # aws.ami             = "ami-80bbf3d2"
     aws.region          = "ap-southeast-1"
-    aws.instance_type   = "t1.micro"
+    aws.instance_type   = "m1.large"
     aws.security_groups = ENV['V_SEC_GROUPS']
 
     override.vm.box               = "dummy"
@@ -27,6 +27,10 @@ Vagrant.configure("2") do |config|
     ## user name for Red Hat Enterprise Linux 6.4 (PV) - ami-80bbf3d2 (64-bit)
     # override.ssh.username         = "ec2-user"
     override.ssh.private_key_path = ENV['V_KEYPAIR_PATH']
+
+    override.vm.provision :shell do |shell|
+      shell.path = "provision.sh.ubuntu"
+    end
 
   end
 
