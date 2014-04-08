@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # SSH forwarding: See https://help.github.com/articles/using-ssh-agent-forwarding
+  config.ssh.forward_agent = true
+
+  config.vm.provider :aws do |aws, override|
+    aws.access_key_id     = ENV['V_AWS_ACCESS_KEY_ID']
+    aws.secret_access_key = ENV['V_AWS_SECRET_ACCESS_KEY']
+    aws.keypair_name      = ENV['V_KEYPAIR_NAME']
+
+    # A Precise64 Ubuntu image that will run as a microinstance in the
+    # region specified
+    ## Ubuntu Server 12.04 LTS (PV) - ami-3c39686e (64-bit)
+    #  aws.ami             = "ami-3c39686e"        
+    ## Red Hat Enterprise Linux 6.4 (PV) - ami-80bbf3d2 (64-bit)
+    aws.ami             = "ami-80bbf3d2"
+    aws.region          = "ap-southeast-1"
+    aws.instance_type   = "t1.micro"
+    aws.security_groups = ENV['V_SEC_GROUPS']
+
+    override.vm.box               = "dummy"
+    ## user name for Ubuntu Server 12.04 LTS (PV) - ami-3c39686e (64-bit)
+    #  override.ssh.username         = "ubuntu"
+    ## user name for Red Hat Enterprise Linux 6.4 (PV) - ami-80bbf3d2 (64-bit)
+    override.ssh.username         = "ec2-user"
+    override.ssh.private_key_path = ENV['V_KEYPAIR_PATH']
+
+  end
+
+end
