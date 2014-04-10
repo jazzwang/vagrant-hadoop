@@ -11,7 +11,6 @@ Requirement
  * [VirtualBox](http://www.virtualbox.org) : tested with 4.3.10
  * [Vagrant](http://www.vagrantup.com) : tested with 1.4.3+
  * [vagrant-aws plugin](https://github.com/mitchellh/vagrant-aws) : tested with 0.4.1
-
  * Amazon EC2 API Tools - [ec2-api-tools](http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/command-reference.html) : tested with 1.5.0.0-0ubuntu1  *(Optional)*
 
 -----
@@ -72,19 +71,25 @@ Desired=Unknown/Install/Remove/Purge/Hold
 ii  ec2-api-tools                  1.5.0.0-0ubuntu1               Amazon EC2 API tools
 ```
 set up your Amazon API credentials. Go to [Account -> Security Credentials](https://console.aws.amazon.com/iam/home?#security_credential)
-- click X.509 Certificates tab
+- click "Access Keys (Access Key ID and Secret Access Key)" tab
 - Create a new Certificate
-- Download the private key and the certificate (save them in e.g. ~/.ec2/cert-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.pem and ~/.ec2/pk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.pem).
-- Make your credential files private: chmod go-rwx ~/.ec2/*.pem 
+- Download the root key and save it in ~/.ec2/rootkey.csv
+- Make your credential files private: chmod go-rwx ~/.ec2/*.csv 
 ```
 jazz@EA-dev:~$ mkdir -p ~/.ec2
-### download X.509 Certificates and private key into ~/.ec2
-jazz@EA-dev:~$ chmod go-rwx ~/.ec2/*.pem
-### generate a shell script for 
+### download Access Key Certificates and private key into ~/.ec2
+jazz@EA-dev:~$ chmod go-rwx ~/.ec2/*.csv
+### generate a shell script for furthur 
+jazz@EA-dev:~$ source ~/.ec2/rootkey.csv
 jazz@EA-dev:~$ cat > ~/.ec2/ec2_keys << EOF
 export EC2_URL=https://ec2.ap-southeast-1.amazonaws.com
-export EC2_PRIVATE_KEY=$(ls ~/.ec2/pk-*.pem)
-export EC2_CERT=$(ls ~/.ec2/cert-*.pem)
+export AWS_ACCESS_KEY=$AWSAccessKeyId
+export AWS_SECRET_KEY=$AWSSecretKey
+export V_AWS_ACCESS_KEY_ID=$AWSAccessKeyId
+export V_AWS_SECRET_ACCESS_KEY=$AWSSecretKey
+export V_KEYPAIR_NAME=vagrant
+export V_KEYPAIR_PATH=~/.ec2/vagrant.pem
+export V_SEC_GROUPS=vagrant
 EOF
 jazz@EA-dev:~$ source ~/.ec2/ec2_keys
 ### generate keypair named by 'vagrant' and store the private key in ~/.ec2/vagrant.pem
