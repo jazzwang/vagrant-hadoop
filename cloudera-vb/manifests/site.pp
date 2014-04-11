@@ -1,6 +1,6 @@
-node 'node1.etu.me' {
+node 'node1.etu.im' {
   class { 'cloudera':
-    cm_server_host => 'node1.etu.me',
+    cm_server_host => 'node1.etu.im',
     use_parcels => false,
   } ->
   class { 'cloudera::cm::server': }

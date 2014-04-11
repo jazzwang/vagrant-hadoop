@@ -5,9 +5,10 @@ cat > /etc/hosts << EOF
 192.168.90.12 node2.etu.im  node2
 EOF
 
+sed -i 's#HOSTNAME=.*##' /etc/sysconfig/network
 sed -i 's#enabled=1#enabled=0#' /etc/yum/pluginconf.d/fastestmirror.conf
 yum -y install http://mirror01.idc.hinet.net/EPEL/6/$(uname -m)/epel-release-6-8.noarch.rpm
-yum -y install puppet puppet-server ntp
+yum -y install puppet puppet-server ntp dnsmasq
 
 chkconfig puppet	on
 chkconfig puppetmaster	on
