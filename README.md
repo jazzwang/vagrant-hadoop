@@ -35,6 +35,9 @@ To checkout the github repository, you need to install `git`.
 ```
 ### Install git on Ubuntu 12.04
 ~$ sudo apt-get -y install git
+### How to check your git version
+~$ git --version
+git version 1.7.9.5
 ```
 ### VirtualBox
 Some scripts are tested on local virtualbox VMs, you need to install virtualbox before running these scripts. 
