@@ -1,5 +1,8 @@
 #!/bin/bash
 echo "[32;1mUSER=$(whoami)[0m"
+## in ubuntu , hostname mapping to 127.0.1.1
+## It cause problem for HBase .... can not connet to 127.0.1.1:60020
+echo "127.0.0.1 localhost $(hostname)" > /etc/hosts
 ## generate locale for Traditional Chinese
 locale-gen "zh_TW.UTF-8"
 ## check for command 'add-apt-repository'
@@ -56,7 +59,7 @@ for i in hadoop-yarn-resourcemanager hadoop-yarn-nodemanager hadoop-mapreduce-hi
 su - hdfs -s /bin/bash -c "hadoop fs -chmod 777 /tmp/hadoop-yarn/staging"
 ## run mapreduce for function test
 hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar pi 2 2
-## run 100mb HDFS test case
+## run HDFS test case
 dd if=/dev/zero of=100mb.img bs=1M count=100
 hadoop fs -put 100mb.img test.img
 ## run hbase test case
@@ -69,6 +72,7 @@ put 't1','r1','f1:c2','v3'
 scan 't1'
 quit
 EOF
+hbase shell /tmp/hbase_test
 ## run pig test case
 wget http://www.hadoop.tw/excite-small.log -O /tmp/excite-small.log
 hadoop fs -put /tmp/excite-small.log /tmp/excite-small.log
@@ -99,3 +103,4 @@ LOAD DATA LOCAL INPATH "/tmp/Master.csv" OVERWRITE INTO TABLE baseball.master;
 select * from baseball.master LIMIT 10;
 quit;
 EOF
+hive -f /tmp/hive_test.hql
