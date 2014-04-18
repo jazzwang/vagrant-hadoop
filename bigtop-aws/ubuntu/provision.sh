@@ -86,7 +86,7 @@ STORE srtd INTO '/tmp/pig_output';
 EOF
 ## run hive test case
 wget http://seanlahman.com/files/database/lahman2012-csv.zip -O /tmp/lahman2012-csv.zip
-( cd /tmp; unzip /tmp/lahman2012-csv.zip
+( cd /tmp; unzip /tmp/lahman2012-csv.zip )
 cat > /tmp/hive_test.hql << EOF
 create database baseball;
 create table baseball.master 
@@ -104,3 +104,4 @@ select * from baseball.master LIMIT 10;
 quit;
 EOF
 hive -f /tmp/hive_test.hql
+

@@ -10,7 +10,6 @@ Vagrant.configure("2") do |config|
   # Virtual Box implementation
   vmboxurl = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210-nocm.box"
 
-  # First node in the cluster
   config.vm.define :bigtop1 do |bigtop1|
 
     bigtop1.vm.box = vmbox
@@ -49,9 +48,11 @@ Vagrant.configure("2") do |config|
       # A Precise64 Ubuntu image that will run as a microinstance in the
       # region specified
       ## Ubuntu Server 12.04 LTS (PV) - ami-3c39686e (64-bit)
-      aws.ami             = "ami-3c39686e"        
       ## Red Hat Enterprise Linux 6.4 (PV) - ami-80bbf3d2 (64-bit)
-      # aws.ami             = "ami-80bbf3d2"
+      ## CentOS 6 (x86_64) - with Updates
+      ## - https://aws.amazon.com/marketplace/pp/B00A6KUVBW
+      ## - Asia Pacific (Singapore) - ami-21682673
+      aws.ami             = "ami-3c39686e"        
       aws.region          = "ap-southeast-1"
       aws.instance_type   = "m3.large"
       aws.security_groups = ENV['AWS_SEC_GROUPS']
