@@ -84,6 +84,10 @@ fltrd = FILTER cntd BY cnt > 50;
 srtd = ORDER fltrd BY cnt;
 STORE srtd INTO '/tmp/pig_output';
 EOF
+### FIXME: pig does not run well with YARN
+### CHEAT
+pig -x local /tmp/pig_test.pig
+hadoop fs -put /tmp/pig_output /tmp/pig_output
 ## run hive test case
 wget http://seanlahman.com/files/database/lahman2012-csv.zip -O /tmp/lahman2012-csv.zip
 ( cd /tmp; unzip /tmp/lahman2012-csv.zip )
