@@ -27,7 +27,7 @@ cat > /etc/hbase/conf/hbase-site.xml << EOF
 <configuration>
   <property>
       <name>hbase.rootdir</name>
-      <value>hdfs://localhost:9000/hbase</value>
+      <value>hdfs://localhost:8020/hbase</value>
   </property>
   <property>
       <name>hbase.tmp.dir</name>

@@ -1,5 +1,3 @@
-{:toc}
-
 # vagrant-hadoop
 
 some vagrant examples for different hadoop cluster deployment model
@@ -127,6 +125,10 @@ The first example is to run BigTop single node Hadoop on AWS EC2.
 ~$ cd vagrant-hadoop/bigtop-aws/ubuntu
 ~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant up bigtop1
 ```
+You could login local virtualbox instance with `vagrant ssh`
+```
+~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant ssh bigtop1
+```
 ## Example 2 : run bigtop example on remote EC2
 ```
 ~$ cd vagrant-hadoop/bigtop-aws/ubuntu
@@ -139,7 +141,14 @@ You could get the public ip of your EC2 instances with `ec2-describe-instance-st
 ```
 You could login remote EC2 instance with `vagrant ssh`
 ```
-~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant ssh
+~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant ssh bigtop2
 ```
 **Note:**
-Please shutdown your EC2 instance after testing with command `vagrant destory -f`, it take USD 0.0 in Singapore region.
+Please shutdown your EC2 instance after testing with command `vagrant halt`, or it will take USD 0.077 in Singapore region.
+```
+~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant halt bigtop2
+```
+To complete terminate your EC2 instance, you could use the command `vagrant destroy -f`.
+```
+~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant destroy -f bigtop2
+```
