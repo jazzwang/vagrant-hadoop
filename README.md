@@ -93,11 +93,9 @@ set up your Amazon API credentials. Go to [Account -> Security Credentials](http
 export EC2_URL=https://ec2.ap-southeast-1.amazonaws.com
 export AWS_ACCESS_KEY=$AWSAccessKeyId
 export AWS_SECRET_KEY=$AWSSecretKey
-export V_AWS_ACCESS_KEY_ID=$AWSAccessKeyId
-export V_AWS_SECRET_ACCESS_KEY=$AWSSecretKey
-export V_KEYPAIR_NAME=vagrant
-export V_KEYPAIR_PATH=~/.ec2/vagrant.pem
-export V_SEC_GROUPS=default
+export AWS_KEYPAIR_NAME=vagrant
+export AWS_KEYPAIR_PATH=~/.ec2/vagrant.pem
+export AWS_SEC_GROUPS=default
 EOF
 ~$ source ~/.ec2/ec2_keys
 ### generate keypair named by 'vagrant' and store the private key in ~/.ec2/vagrant.pem
@@ -113,6 +111,8 @@ To run some example vagrant script for AWS EC2, please install vagrant-aws plugi
 vagrant-aws (0.4.1)
 vagrant-login (1.0.1, system)
 vagrant-share (1.0.1, system)
+### Add 'dummy' box for 'vagrant-aws' plugin
+~$ vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
 ```
 -----
 ## Get the source code
@@ -120,9 +120,14 @@ You can check out the source code with following commands
 ```
 ~$ git clone https://github.com/jazzwang/vagrant-hadoop
 ```
-## Example 1 : 
+## Example 1 : run bigtop example on local virtualbox
 
 The first example is to run BigTop single node Hadoop on AWS EC2.
+```
+~$ cd vagrant-hadoop/bigtop-aws/ubuntu
+~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant up bigtop1
+```
+## Example 2 : run bigtop example on remote EC2
 ```
 ~$ cd vagrant-hadoop/bigtop-aws/ubuntu
 ~/vagrant-hadoop/bigtop-aws/ubuntu$ source ~/.ec2/ec2_keys
