@@ -84,6 +84,7 @@ fltrd = FILTER cntd BY cnt > 50;
 srtd = ORDER fltrd BY cnt;
 STORE srtd INTO '/tmp/pig_output';
 EOF
+pig -f /tmp/pig_test.pig
 ## run hive test case
 wget http://seanlahman.com/files/database/lahman2012-csv.zip -O /tmp/lahman2012-csv.zip
 ( cd /tmp; unzip /tmp/lahman2012-csv.zip )
