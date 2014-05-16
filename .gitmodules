@@ -1,0 +1,3 @@
+[submodule "vagrant-hadoop-cluster"]
+	path = vagrant-hadoop-cluster
+	url = https://github.com/calo81/vagrant-hadoop-cluster.git
