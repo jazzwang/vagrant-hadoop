@@ -1,0 +1,64 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # SSH forwarding: See https://help.github.com/articles/using-ssh-agent-forwarding
+  config.ssh.forward_agent = true
+
+  vmbox = "puppetlab-centos-64-nocm"
+  # Virtual Box implementation
+  vmboxurl = "http://puppet-vagrant-boxes.puppetlabs.com/centos-64-x64-vbox4210-nocm.box"
+
+  config.vm.define :bigtop1 do |bigtop1|
+
+    bigtop1.vm.box = vmbox
+    bigtop1.vm.box_url = vmboxurl
+
+    bigtop1.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+
+    bigtop1.vm.network :private_network, ip: "192.168.90.20"
+    bigtop1.vm.hostname = "bigtop1"
+
+    bigtop1.vm.provision :shell do |shell|
+      shell.path = "provision.sh"
+    end
+
+  end
+
+  config.vm.define :bigtop2 do |bigtop2|
+
+    bigtop2.vm.box     = "dummy"
+    bigtop2.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
+    bigtop2.ssh.username         = "root"
+    bigtop2.ssh.private_key_path = ENV['AWS_KEYPAIR_PATH']
+
+    bigtop2.vm.provision :shell do |shell|
+      shell.path = "provision.sh"
+    end
+
+    bigtop2.vm.provider :aws do |aws|
+
+      aws.access_key_id     = ENV['AWS_ACCESS_KEY']
+      aws.secret_access_key = ENV['AWS_SECRET_KEY']
+      aws.keypair_name      = ENV['AWS_KEYPAIR_NAME']
+
+      # A Precise64 Ubuntu image that will run as a microinstance in the
+      # region specified
+      ## Ubuntu Server 12.04 LTS (PV) - ami-3c39686e (64-bit)
+      ## Red Hat Enterprise Linux 6.4 (PV) - ami-80bbf3d2 (64-bit)
+      ## CentOS 6 (x86_64) - with Updates
+      ## - https://aws.amazon.com/marketplace/pp/B00A6KUVBW
+      ## - Asia Pacific (Singapore) - ami-21682673
+      aws.ami             = "ami-21682673"        
+      aws.region          = "ap-southeast-1"
+      aws.instance_type   = "m3.large"
+      aws.security_groups = ENV['AWS_SEC_GROUPS']
+
+    end
+
+  end
+
+end

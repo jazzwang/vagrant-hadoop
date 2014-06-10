@@ -1,0 +1,413 @@
+    1  cat /etc/sysconfig/network-scripts/ifcfg-eth0
+    2  clear
+    3  /vagrant/send_my_score.pl 
+    4  sudo /vagrant/send_my_score.pl 
+    5  clear
+    6  sudo /vagrant/send_my_score.pl 
+    7  hostname
+    8  sudo /vagrant/send_my_score.pl 
+    9  mailx
+   10  mail
+   11  sudo /vagrant/send_my_score.pl 
+   12  ls -al /tmp/
+   13  date
+   14  sudo /vagrant/send_my_score.pl 
+   15  date
+   16  ls -al /tmp/
+   17  cat /tmp/node1_20140415_04.06.09.924233043.txt 
+   18  rm /tmp/node1_2014*
+   19  sudo rm /tmp/node1_2014*
+   20  sudo rm /tmp/2014-04-15_040418389455326.txt 
+   21  sudo /vagrant/send_my_score.pl 
+   22  cat /tmp/node1_20140415_04.07.21.483572668.txt 
+   23  curl
+   24  sudo /vagrant/send_my_score.pl 
+   25  sudo netstat -nap | grep java | grep 8020
+   26  sudo netstat -nap | grep java | grep LISTEN | grep 8020
+   27  sudo /vagrant/send_my_score.pl 
+   28  sudo /etc/init.d/hadoop-hdfs-namenode stop
+   29  sudo /vagrant/send_my_score.pl 
+   30  echo $?
+   31  echo $$
+   32  echo $?
+   33  sudo /vagrant/send_my_score.pl 
+   34  echo $?
+   35  sudo /vagrant/send_my_score.pl 
+   36  /etc/init.d/hadoop-hdfs-namenode start
+   37  sudo /etc/init.d/hadoop-hdfs-namenode start
+   38  /etc/init.d/hadoop-hdfs-namenode start
+   39  sudo /vagrant/send_my_score.pl 
+   40  sudo su -
+   41  dd if=/dev/zero of=100mb.img bs=1M count=100  
+   42  hadoop fs -put 100mb.img test.img 
+   43  hadoop fs -mkdir tmp
+   44  sudo su - hdfs -s /bin/bash -c "hadoop fs -mkdir /user/vagrant"
+   45  sudo su - hdfs -s /bin/bash -c "hadoop fs -chown vagrant /user/vagrant"
+   46  hadoop fs -put 100mb.img test.img 
+   47  sudo /vagrant/send_my_score.pl 
+   48  netstat -nap | grep 2181
+   49  sudo /vagrant/send_my_score.pl 
+   50  echo "scan 't1'" | hbase shell 
+   51  echo "scan 't1'; exit;" > /tmp/test_hbase
+   52  hbase shell /tmp/test_hbase 
+   53  hbase shell
+   54  jps
+   55  sudo jps
+   56  sudo /vagrant/send_my_score.pl 
+   57  cat /var/log/hbase/hbase-hbase-master-node1.log 
+   58  vi /etc/hbase/conf/hbase-site.xml
+   59  sudo vi /etc/hbase/conf/hbase-site.xml
+   60  sudo /etc/init.d/hbase-master restart
+   61  sudo /vagrant/send_my_score.pl 
+   62  cat /tmp/test_hbase 
+   63  hbase shell /tmp/test_hbase 
+   64  hbase shell list
+   65  echo "list" | hbase shell
+   66  echo "list" | hbase shell | grep rows
+   67  echo "list" | hbase shell | grep row
+   68  hbase shell
+   69  echo "scan 't1'" | hbase shell | grep row
+   70  echo "scan 't1'" | hbase shell | grep row | awk '{ print $1 }'
+   71  sudo /vagrant/send_my_score.pl 
+   72  exec 2> /dev/null ; echo "scan 't2'" | hbase shell | grep row | awk '{ print \$1 }'
+   73  ps ax
+   74  w
+   75  echo "scan 't2'" | hbase shell | grep "row(s)" | awk '{ print $1 }'
+   76  echo "scan 't1'" | hbase shell | grep "row(s)" | awk '{ print $1 }'
+   77  hbase shell
+   78  sudo /vagrant/send_my_score.pl 
+   79  clear
+   80  ls
+   81  rm 100mb.img 
+   82  ls -al
+   83  hbase shell
+   84  sudo /vagrant/send_my_score.pl 
+   85  ls /tmp/
+   86  rm /tmp/node1_20140415_0*
+   87  sudo rm /tmp/node1_20140415_0*
+   88  ls /tmp/
+   89  sudo rm /tmp/test_hbase 
+   90  sudo /vagrant/send_my_score.pl 
+   91  wget http://hadoop.nchc.org.tw/excite-small.log
+   92  hadoop fs -put excite-small.log .
+   93  pig
+   94  hadoop fs -ls
+   95  hadoop fs -ls /tmp/
+   96  hadoop fs -ls /tmp/pig_output
+   97  hadoop fs -cat /tmp/pig_output/part-r-00000
+   98  sudo /vagrant/send_my_score.pl 
+   99  hadoop fs -lsr /
+  100  hadoop fs -lsr / | grep pig_output
+  101  sudo /vagrant/send_my_score.pl 
+  102  hadoop fs -cat /tmp/pig_output/part-r-00000
+  103  diff hadoop fs -get /tmp/pig_output/part-* /tmp/pig_output.hdfs
+  104  hadoop fs -get /tmp/pig_output/part-* /tmp/pig_output.hdfs
+  105  cat /tmp/pig_output.hdfs 
+  106  cp /tmp/pig_output.hdfs /tmp/reference
+  107  diff /tmp/pig_output.hdfs /tmp/reference 
+  108  echo $?
+  109  sudo /vagrant/send_my_score.pl 
+  110  hadoop fs -rmr /tmp/pig_output
+  111  sudo /vagrant/send_my_score.pl 
+  112  vi
+  113  pig test.pig 
+  114  /etc/init.d/hadoop-mapreduce-historyserver start
+  115  sudo /etc/init.d/hadoop-mapreduce-historyserver start
+  116  pig test.pig 
+  117  hadoop fs -rmr /tmp/pig_output
+  118  pig test.pig 
+  119  wget http://seanlahman.com/files/database/lahman2012-csv.zip 
+  120  unzip lahman2012-csv.zip 
+  121  hive
+  122  hive -S -e "use baseball; SELECT birthyear, lahmanID, nameFirst FROM master WHERE birthyear > 1900 ;"
+  123  sudo /vagrant/send_my_score.pl 
+  124  hadoop fs -lsr / | grep baseball
+  125  hadoop fs -lsr / | grep "baseball.db"
+  126  hive -S -e "use baseball; SELECT birthyear, lahmanID, nameFirst FROM master WHERE birthyear > 1900 ;" > /tmp/hive_result
+  127  cat /tmp/hive_result 
+  128  hive -S -e "use baseball; SELECT birthyear, lahmanID, nameFirst FROM master WHERE birthyear > 1900 LIMIT 3;" > /tmp/hive_result
+  129  cat /tmp/hive_result 
+  130  hive -S -e "use baseballs; SELECT birthyear, lahmanID, nameFirst FROM master WHERE birthyear > 1900 LIMIT 3;" > /tmp/hive_result
+  131  cat /tmp/hive_result 
+  132  hive -S -e "use baseballs; SELECT birthyear, lahmanID, nameFirst FROM master WHERE birthyear > 1900 LIMIT 3;" > /tmp/hive_result
+  133  echo $?
+  134  hive -S -e "use baseball; SELECT birthyear, lahmanID, nameFirst FROM master WHERE birthyear > 1900 LIMIT 3;" > /tmp/hive_result
+  135  echo $?
+  136  sudo /vagrant/send_my_score.pl 
+  137  exit
+  138  ps ax
+  139  echo $ID
+  140  echo $USER
+  141  ls -al
+  142  sudo jps
+  143  cd /vagrant/
+  144  ls
+  145  vi send_my_score.pl
+  146  which perl
+  147  vi send_my_score.pl
+  148  chmod a+x send_my_score.pl 
+  149  cd
+  150  vim
+  151  vi .vimrc 
+  152  cd /vagrant/
+  153  ls
+  154  vi send_my_score.pl 
+  155  sudo ./send_my_score.pl 
+  156  vi send_my_score.pl 
+  157  sudo ./send_my_score.pl 
+  158  vi send_my_score.pl 
+  159  sudo ./send_my_score.pl 
+  160  jps
+  161  sudo jps
+  162  vi send_my_score.pl 
+  163  sudo ./send_my_score.pl 
+  164  vi send_my_score.pl 
+  165  sudo ./send_my_score.pl 
+  166  vi send_my_score.pl 
+  167  sudo ./send_my_score.pl 
+  168  vi send_my_score.pl 
+  169  sudo ./send_my_score.pl 
+  170  vi send_my_score.pl 
+  171  sudo ./send_my_score.pl 
+  172  vi send_my_score.pl 
+  173  sudo ./send_my_score.pl 
+  174  vi send_my_score.pl 
+  175  sudo ./send_my_score.pl 
+  176  vi send_my_score.pl 
+  177  sudo ./send_my_score.pl 
+  178  vi send_my_score.pl 
+  179  sudo ./send_my_score.pl 
+  180  vi send_my_score.pl 
+  181  sudo ./send_my_score.pl 
+  182  vi send_my_score.pl 
+  183  sudo ./send_my_score.pl 
+  184  vi send_my_score.pl 
+  185  sudo ./send_my_score.pl 
+  186  vi send_my_score.pl 
+  187  sudo ./send_my_score.pl 
+  188  vi send_my_score.pl 
+  189  sudo ./send_my_score.pl 
+  190  vi send_my_score.pl 
+  191  sudo ./send_my_score.pl 
+  192  vi send_my_score.pl 
+  193  sudo ./send_my_score.pl 
+  194  vi send_my_score.pl 
+  195  sudo ./send_my_score.pl 
+  196  vi send_my_score.pl 
+  197  sudo ./send_my_score.pl 
+  198  vi send_my_score.pl 
+  199  sudo ./send_my_score.pl 
+  200  vi send_my_score.pl 
+  201  sudo ./send_my_score.pl 
+  202  vi send_my_score.pl 
+  203  sudo ./send_my_score.pl 
+  204  vi send_my_score.pl 
+  205  sudo ./send_my_score.pl 
+  206  vi send_my_score.pl 
+  207  sudo ./send_my_score.pl 
+  208  clear
+  209  vi send_my_score.pl 
+  210  sudo ./send_my_score.pl 
+  211  vi send_my_score.pl 
+  212  sudo ./send_my_score.pl 
+  213  vi send_my_score.pl 
+  214  sudo ./send_my_score.pl 
+  215  vi send_my_score.pl 
+  216  sudo ./send_my_score.pl 
+  217  vi send_my_score.pl 
+  218  sudo ./send_my_score.pl 
+  219  vi send_my_score.pl 
+  220  sudo ./send_my_score.pl 
+  221  vi send_my_score.pl 
+  222  sudo ./send_my_score.pl 
+  223  vi send_my_score.pl 
+  224  sudo ./send_my_score.pl 
+  225  vi send_my_score.pl 
+  226  sudo ./send_my_score.pl 
+  227  vi send_my_score.pl 
+  228  sudo ./send_my_score.pl 
+  229  vi send_my_score.pl 
+  230  sudo ./send_my_score.pl 
+  231  vi send_my_score.pl 
+  232  sudo ./send_my_score.pl 
+  233  vi send_my_score.pl 
+  234  which hadoop
+  235  vi send_my_score.pl 
+  236  sudo jps
+  237  free -m
+  238  ifconfig 
+  239  netstat -nap | grep 8088
+  240  sudo netstat -nap | grep 8088
+  241  ifconfig 
+  242  route -n
+  243  cd
+  244  cd /vagrant/
+  245  ls
+  246  vi send_my_score.pl 
+  247  netstat -nap | grep 10020
+  248  sudo netstat -nap | grep 10020
+  249  dpkg -S history
+  250  rpm -ql history
+  251  cd /etc/hadoop/conf
+  252  grep 10020 *
+  253  vi mapred-site.xml
+  254  sudo /etc/init.d/hadoop-mapreduce-historyserver start
+  255  cat /var/log/hadoop-mapreduce/mapred-mapred-historyserver-node1.log
+  256  hadoop fs -ls /tmp/hadoop-yarn/staging
+  257  hadoop fs -chmod a+rwx /tmp/hadoop-yarn/staging
+  258  hadoop fs -ls /tmp/hadoop-yarn/staging
+  259  sudo /etc/init.d/hadoop-mapreduce-historyserver start
+  260  cat /var/log/hadoop-mapreduce/mapred-mapred-historyserver-node1.log 
+  261  hadoop fs -chmod a+w /tmp/hadoop-yarn/staging/history
+  262  hadoop fs -ls /tmp/hadoop-yarn/staging/history
+  263  sudo /etc/init.d/hadoop-mapreduce-historyserver restart
+  264  cat /var/log/hadoop-mapreduce/mapred-mapred-historyserver-node1.log 
+  265  cd
+  266  cd /vagrant/
+  267  vi send_my_score.pl 
+  268  ldd send_my_score
+  269  ./send_my_score
+  270  yum search perl par
+  271  yum search libpar
+  272  yum search perl par
+  273  sudo yum -y install perl-PAR-Dist
+  274  pp
+  275  cpan pp
+  276  yum -y install cpan
+  277  sudo yum -y install cpan
+  278  sudo cpan pp
+  279  ls
+  280  pp
+  281  ldd a.out 
+  282  ./a.out 
+  283  yum search perl zlib
+  284  sudo yum -y install perl-Compress-Raw-Zlib
+  285  yum search perl pp
+  286  ls
+  287  file a.out 
+  288  rm a.out 
+  289  ls
+  290  rpm -ql perl-PAR
+  291  rpm -qa | grep perl-PAR
+  292  rpm -ql perl-PAR-Dist
+  293  cpan
+  294  sudo cpan
+  295  sudo cpan pp
+  296  yum search yaml
+  297  sudo yum -i install perl-YAML
+  298  sudo yum -y install perl-YAML
+  299  sudo cpan pp
+  300  yum search perl embed
+  301  sudo yum -y install perl-ExtUtils-Embed
+  302  sudo cpan pp
+  303  cpan -i App::cpanminus
+  304  sudo cpan -i App::cpanminus
+  305  pp
+  306  sudo pp
+  307  sudo cpanm -n PAR::Packer
+  308  sudo cpan -n PAR::Packer
+  309  vi pp
+  310  chmod a+x pp
+  311  ./pp send_my_score.pl -o send_my_score
+  312  ldd send_my_score
+  313  ./pp send_my_score.pl -o send_my_score
+  314  sudo ./send_my_score
+  315  vi send_my_score.pl 
+  316  sudo ./send_my_score
+  317  ls -al
+  318  ./pp send_my_score.pl -o send_my_score
+  319  cat derby.log 
+  320  rm derby.log 
+  321  ls
+  322  ls -al
+  323  history 
+  324  vi send_my_score.pl 
+  325  sudo ./send_my_score.pl 
+  326  ./pp send_my_score.pl -o send_my_score
+  327  sudo ./send_my_score.pl 
+  328  dme
+  329  dmesg 
+  330  ls
+  331  ./pp send_my_score.pl -o send_my_score
+  332  sudo ./send_my_score
+  333  ./pp send_my_score.pl -o send_my_score
+  334  sudo ./send_my_score
+  335  ./pp send_my_score.pl -o send_my_score
+  336  sudo ./send_my_score
+  337  ./pp send_my_score.pl -o send_my_score
+  338  sudo ./send_my_score
+  339  ./pp send_my_score.pl -o send_my_score
+  340  sudo ./send_my_score
+  341  ./pp send_my_score.pl -o send_my_score
+  342  sudo ./send_my_score
+  343  ./pp send_my_score.pl -o send_my_score
+  344  sudo ./send_my_score
+  345  ./pp send_my_score.pl -o send_my_score
+  346  sudo /etc/init.d/hadoop-mapreduce-historyserver stop
+  347  sudo /etc/init.d/hadoop-hdfs-namenode stop
+  348  cd
+  349  sudo /vagrant/send_my_score
+  350  clear
+  351  exit
+  352  uname -a
+  353  cd /vagrant/
+  354  ls
+  355  ldd send_my_score
+  356  ./send_my_score[B
+  357  sudo cp send_my_score /usr/local/bin/
+  358  send_my_score 
+  359  sudo send_my_score
+  360  sudo /usr/local/bin/send_my_score
+  361  dme
+  362  clear
+  363  ps ax
+  364  mail
+  365  mailx -s
+  366  mailx -s "$(hostname)" jazz.etu@gmail.com << /tmp/node1_20140415_08.23.33.526462894.txt 
+  367  mailx -s "$(hostname)" jazz.etu@gmail.com <<< /tmp/node1_20140415_08.23.33.526462894.txt 
+  368  cat /tmp/node1_20140415_08.23.33.526462894.txt
+  369  cat /tmp/hive_result 
+  370  vi send_my_score.pl 
+  371  ps ax | grep java | grep NameNode
+  372  ps aux | grep java | grep NameNode
+  373  ps aux | grep java | grep NameNode | awk '{ print $1 }'
+  374  cd /tmp/
+  375  ls
+  376  cat node1_20140415_08.31.46.683047281.txt 
+  377  history 
+  378  mailx -s "$(hostname)" jazz.etu@gmail.com <<< /tmp/node1_20140415_08.23.33.526462894.txt
+  379  mailx -s "$(hostname)" jazz.etu@gmail.com < /tmp/node1_20140415_08.23.33.526462894.txt
+  380  cat /tmp/node1_20140415_08.35.03.981555937.txt 
+  381  ls
+  382  cat 20140415_08.42.05.431376933.txt 
+  383  cd
+  384  vi /vagrant/send_my_score
+  385  vi /vagrant/send_my_score.pl 
+  386  cd /tmp/
+  387  ls
+  388  rm node*
+  389  sudo rm node*
+  390  ls
+  391  cat 20140415_08.43.36.017798356.txt 
+  392  ls
+  393  rm 20140415_08.4*
+  394  sudo rm 20140415_08.4*
+  395  cd
+  396  cd /vagrant/
+  397  ls
+  398  vi send_my_score.pl 
+  399  cat /tmp/20140415_09.06.39.983314907.txt 
+  400  vi send_my_score.pl 
+  401  cat /tmp/20140415_09.10.18.245680964.txt 
+  402  vi send_my_score.pl 
+  403  clear
+  404  ps ax
+  405  clear
+  406  ps ax
+  407  jps
+  408  sudo jsp
+  409  sudo jps
+  410  exit
+  411  cd /vagrant/
+  412  ls
+  413  history > history
