@@ -1,0 +1,85 @@
+#!/bin/bash
+
+cat > /etc/yum.repos.d/etu.repo << EOF
+[EM-3.1] 
+name=EM 3.1 Enterprise
+baseurl=file:///mnt
+gpgkey=
+enabled=1 
+gpgcheck=0
+EOF
+
+yum -y install epel-release wget tar gzip
+yum -y install puppet oracle-j2sdk1.7 cloudera-manager-agent openssh-clients openssh-server
+yum -y install cloudera-manager-server-db-2 cloudera-manager-serverh
+yum -y install hadoop hadoop-httpfs hadoop-0.20-mapreduce
+puppet module install razorsedge/cloudera --verbose --debug
+
+ln -s /usr/java/jdk1.7.0_67-cloudera /usr/java/default
+
+update-alternatives --install /usr/bin/javac javac /usr/java/default/bin/javac 1601 \
+        --slave /usr/bin/appletviewer appletviewer /usr/java/default/bin/appletviewer \
+        --slave /usr/bin/apt apt /usr/java/default/bin/apt \
+        --slave /usr/bin/extcheck extcheck /usr/java/default/bin/extcheck \
+        --slave /usr/bin/idlj idlj /usr/java/default/bin/idlj \
+        --slave /usr/bin/jar jar /usr/java/default/bin/jar \
+        --slave /usr/bin/jarsigner jarsigner /usr/java/default/bin/jarsigner \
+        --slave /usr/bin/javadoc javadoc /usr/java/default/bin/javadoc \
+        --slave /usr/bin/javah javah /usr/java/default/bin/javah \
+        --slave /usr/bin/javap javap /usr/java/default/bin/javap \
+        --slave /usr/bin/jconsole jconsole /usr/java/default/bin/jconsole \
+        --slave /usr/bin/jdb jdb /usr/java/default/bin/jdb \
+        --slave /usr/bin/jhat jhat /usr/java/default/bin/jhat \
+        --slave /usr/bin/jinfo jinfo /usr/java/default/bin/jinfo \
+        --slave /usr/bin/jmap jmap /usr/java/default/bin/jmap \
+        --slave /usr/bin/jps jps /usr/java/default/bin/jps \
+        --slave /usr/bin/jrunscript jrunscript /usr/java/default/bin/jrunscript \
+        --slave /usr/bin/jsadebugd jsadebugd /usr/java/default/bin/jsadebugd \
+        --slave /usr/bin/jstack jstack /usr/java/default/bin/jstack \
+        --slave /usr/bin/jstat jstat /usr/java/default/bin/jstat \
+        --slave /usr/bin/jstatd jstatd /usr/java/default/bin/jstatd \
+        --slave /usr/bin/native2ascii native2ascii /usr/java/default/bin/native2ascii \
+        --slave /usr/bin/policytool policytool /usr/java/default/bin/policytool \
+        --slave /usr/bin/rmic rmic /usr/java/default/bin/rmic \
+        --slave /usr/bin/schemagen schemagen /usr/java/default/bin/schemagen \
+        --slave /usr/bin/serialver serialver /usr/java/default/bin/serialver \
+        --slave /usr/bin/wsgen wsgen /usr/java/default/bin/wsgen \
+        --slave /usr/bin/wsimport wsimport /usr/java/default/bin/wsimport \
+        --slave /usr/bin/xjc xjc /usr/java/default/bin/xjc \
+        --slave /usr/bin/jvisualvm jvisualvm /usr/java/default/bin/jvisualvm \
+        --slave /usr/bin/HtmlConverter HtmlConverter /usr/java/default/bin/HtmlConverter \
+        --slave /usr/lib/jvm/java java_sdk /usr/java/default \
+        --slave /usr/lib/jvm-exports/java java_sdk_exports /usr/java/default/lib
+
+chkconfig puppet                  off
+chkconfig atd                     off
+chkconfig auditd                  off
+chkconfig crond                   off
+chkconfig cups                    off
+chkconfig lvm2-monitor            off
+chkconfig haldaemon               off
+chkconfig portreserve             off
+chkconfig postfix                 off
+chkconfig messagebus              off
+chkconfig nfslock                 off
+chkconfig iptables                off
+chkconfig ip6tables               off
+chkconfig rpcbind                 off
+chkconfig rpcgssd                 off
+chkconfig hadoop-httpfs           off
+chkconfig cloudera-scm-agent      off
+chkconfig cloudera-scm-server     off
+chkconfig cloudera-scm-server-db  off
+chkconfig abrt-ccpp               off
+chkconfig abrtd                   off
+chkconfig cpuspeed                off
+chkconfig dkms_autoinstaller      off
+chkconfig irqbalance              off
+chkconfig kdump                   off
+chkconfig mdmonitor               off
+chkconfig sysstat                 off
+chkconfig vboxadd                 off
+chkconfig vboxadd-service         off
+chkconfig vboxadd-x11             off
+
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key" > /home/vagrant/.ssh/authorized_keys
