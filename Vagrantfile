@@ -25,7 +25,6 @@ Vagrant.configure(2) do |config|
     end
     master1.vm.network :private_network, ip: "192.168.90.10"
     master1.vm.hostname = "master1"
-    master1.vm.synced_folder ".ssh", "/home/vagrant/.ssh"
     master1.vm.provision "shell", inline: <<-SHELL
         ntpdate pool.ntp.org
         sed -i "s#master1 localhost#localhost#g"        /etc/hosts
