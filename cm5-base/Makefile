@@ -13,4 +13,5 @@ status:
 	vagrant status
 clean:
 	rm -f cm5-base.box
+purge:
 	vagrant box remove jazzwang/cm5-base
