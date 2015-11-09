@@ -9,7 +9,7 @@ enabled=1
 gpgcheck=0
 EOF
 
-yum -y install epel-release wget tar gzip
+yum -y install epel-release wget tar gzip ntp
 yum -y install puppet oracle-j2sdk1.7 cloudera-manager-agent openssh-clients openssh-server
 yum -y install cloudera-manager-server-db-2 cloudera-manager-server
 yum -y install hadoop hadoop-httpfs hadoop-0.20-mapreduce
