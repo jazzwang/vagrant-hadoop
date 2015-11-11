@@ -26,7 +26,6 @@ Vagrant.configure(2) do |config|
     master1.vm.network :private_network, ip: "192.168.90.10"
     master1.vm.hostname = "master1"
     master1.vm.provision "shell", inline: <<-SHELL
-        ntpdate pool.ntp.org
         sed -i "s#master1 localhost#localhost#g"        /etc/hosts
         sed -i "s#server_host=.*#server_host=master1#g" /etc/cloudera-scm-agent/config.ini
         /etc/init.d/cloudera-scm-agent       clean_restart_confirmed
@@ -45,7 +44,6 @@ Vagrant.configure(2) do |config|
     master2.vm.network :private_network, ip: "192.168.90.11"
     master2.vm.hostname = "master2"
     master2.vm.provision "shell", inline: <<-SHELL
-        ntpdate pool.ntp.org
         sed -i "s#master2 localhost#localhost#g"        /etc/hosts
         sed -i "s#server_host=.*#server_host=master1#g" /etc/cloudera-scm-agent/config.ini
         /etc/init.d/cloudera-scm-agent       clean_restart_confirmed
@@ -60,7 +58,6 @@ Vagrant.configure(2) do |config|
     worker1.vm.network :private_network, ip: "192.168.90.12"
     worker1.vm.hostname = "worker1"
     worker1.vm.provision "shell", inline: <<-SHELL
-        ntpdate pool.ntp.org
         sed -i "s#worker1 localhost#localhost#g"        /etc/hosts
         sed -i "s#server_host=.*#server_host=master1#g" /etc/cloudera-scm-agent/config.ini
         /etc/init.d/cloudera-scm-agent       clean_restart_confirmed
