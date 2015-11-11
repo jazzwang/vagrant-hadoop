@@ -1,26 +1,26 @@
 #!/bin/bash
-
-cat > /etc/yum.repos.d/etu.repo << EOF
-[EM-3.1] 
-name=EM 3.1 Enterprise
-baseurl=file:///mnt
-gpgkey=
-enabled=1 
-gpgcheck=0
-EOF
-
-yum -y install epel-release wget tar gzip ntp
-yum -y install puppet oracle-j2sdk1.7 cloudera-manager-agent openssh-clients openssh-server
-yum -y install cloudera-manager-server-db-2 cloudera-manager-server
-yum -y install hadoop hadoop-httpfs hadoop-0.20-mapreduce
-puppet module install razorsedge/cloudera --verbose --debug
-
-rm /etc/yum.repos.d/etu.repo
-yum clean all
-
+## install required packages
+yum -y install epel-release wget tar gzip ntp openssh-clients openssh-server
+## install cloudera manager related packages
+cd /etc/yum.repos.d
+wget http://archive.cloudera.com/cm5/redhat/6/x86_64/cm/cloudera-manager.repo
+yum -y install oracle-j2sdk1.7 cloudera-manager-agent cloudera-manager-server-db-2 cloudera-manager-server
+## configure JDK 1.7 provided by Cloudera
 ln -s /usr/java/jdk1.7.0_67-cloudera /usr/java/default
-
-update-alternatives --install /usr/bin/javac javac /usr/java/default/bin/javac 1601 \
+## configure alternatives for java
+update-alternatives --install /usr/bin/java  java  /usr/java/default/bin/java  16001 \
+            --slave /usr/lib/jvm/jre jre /usr/java/default/jre \
+            --slave /usr/lib/jvm-exports/jre jre_exports /usr/java/default/jre \
+            --slave /usr/bin/keytool keytool /usr/java/default/jre/bin/keytool \
+            --slave /usr/bin/orbd orbd /usr/java/default/jre/bin/orbd \
+            --slave /usr/bin/pack200 pack200 /usr/java/default/jre/bin/pack200 \
+            --slave /usr/bin/rmid rmid /usr/java/default/jre/bin/rmid \
+            --slave /usr/bin/rmiregistry rmiregistry /usr/java/default/jre/bin/rmiregistry \
+            --slave /usr/bin/servertool servertool /usr/java/default/jre/bin/servertool \
+            --slave /usr/bin/tnameserv tnameserv /usr/java/default/jre/bin/tnameserv \
+            --slave /usr/bin/unpack200 unpack200 /usr/java/default/jre/bin/unpack200
+## configure alternatives for java
+update-alternatives --install /usr/bin/javac javac /usr/java/default/bin/javac 16001 \
         --slave /usr/bin/appletviewer appletviewer /usr/java/default/bin/appletviewer \
         --slave /usr/bin/apt apt /usr/java/default/bin/apt \
         --slave /usr/bin/extcheck extcheck /usr/java/default/bin/extcheck \
@@ -82,6 +82,7 @@ chkconfig sysstat                 off
 chkconfig vboxadd                 off
 chkconfig vboxadd-service         off
 chkconfig vboxadd-x11             off
-
 ## insert old vagrant ssh key
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key" > /home/vagrant/.ssh/authorized_keys
+## clean up unneed files
+yum clean all
