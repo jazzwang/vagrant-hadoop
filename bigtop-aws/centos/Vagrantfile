@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
     bigtop1.vm.box_url = vmboxurl
 
     bigtop1.vm.provider :virtualbox do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048"]
+      vb.customize ["modifyvm", :id, "--memory", "4096"]
     end
 
     bigtop1.vm.network :private_network, ip: "192.168.90.20"
@@ -47,14 +47,15 @@ Vagrant.configure("2") do |config|
 
       # A Precise64 Ubuntu image that will run as a microinstance in the
       # region specified
-      ## Ubuntu Server 12.04 LTS (PV) - ami-3c39686e (64-bit)
-      ## Red Hat Enterprise Linux 6.4 (PV) - ami-80bbf3d2 (64-bit)
       ## CentOS 6 (x86_64) - with Updates
       ## - https://aws.amazon.com/marketplace/pp/B00A6KUVBW
-      ## - Asia Pacific (Singapore) - ami-21682673
-      aws.ami             = "ami-21682673"        
+      ## - Asia Pacific (Singapore) - ami-0aaf8858
+      ## CentOS 6 (x86_64) - with Updates HVM
+      ## - https://aws.amazon.com/marketplace/pp/B00NQAYLWO
+      ## - Asia Pacific (Singapore) - ami-44617116
+      aws.ami             = "ami-44617116"        
       aws.region          = "ap-southeast-1"
-      aws.instance_type   = "m3.large"
+      aws.instance_type   = "r3.large"
       aws.security_groups = ENV['AWS_SEC_GROUPS']
 
     end
