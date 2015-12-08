@@ -17,7 +17,7 @@ some vagrant examples for different hadoop cluster deployment model
 These scripts are tested on Ubuntu Desktop 12.04 LTS **64 bit** GNU/Linux.
 Why **64 bit**? Because [Apache BigTop](http://bigtop.apache.org) only provides 64 bit deb/rpm packages.
 Besides, to run 64 bit VirtualBox images, you also need a 64 bit host OS.
-```
+```sh
 ### How to check your OS version
 ~$ uname -a
 Linux EA-dev 3.8.0-29-generic #42~precise1-Ubuntu SMP Wed Aug 14 16:19:23 UTC 2013 x86_64 x86_64 x86_64 GNU/Linux
@@ -30,7 +30,7 @@ Codename: precise
 ```
 ### git
 To checkout the github repository, you need to install `git`.
-```
+```sh
 ### Install git on Ubuntu 12.04
 ~$ sudo apt-get -y install git
 ### How to check your git version
@@ -41,7 +41,7 @@ git version 1.7.9.5
 Some scripts are tested on local virtualbox VMs, you need to install virtualbox before running these scripts. 
 Due to PXE boot issue of some NICs, we suggest to run official virtualbox instead of ubuntu package (4.1.12_Ubuntur77245).
 Please install official [virtualbox rpm/deb/exe](https://www.virtualbox.org/wiki/Downloads) for your environment.
-```
+```sh
 ### Install VirtualBox on Ubuntu 12.04
 ~$ echo "deb http://download.virtualbox.org/virtualbox/debian precise contrib" > virtualbox.list
 ~$ sudo mv virtualbox.list /etc/apt/sources.list.d/
@@ -54,7 +54,7 @@ Please install official [virtualbox rpm/deb/exe](https://www.virtualbox.org/wiki
 ### Vagrant
 These scripts are based on [Vagrant 2 syntex](http://docs.vagrantup.com/v2/vagrantfile/version.html), so you can not use the default ubuntu package (1.0.1). 
 Please install [official vagrant rpm/deb/exe](http://www.vagrantup.com/downloads.html) for your environment.
-```
+```sh
 ### Install official vagrant package on Ubuntu
 ~$ wget https://dl.bintray.com/mitchellh/vagrant/vagrant_1.5.2_x86_64.deb
 ~$ sudo dpkg -i vagrant_1.5.2_x86_64.deb 
@@ -64,7 +64,7 @@ Vagrant 1.5.2
 ```
 ### Amazon EC2 Access Key
 To run virtual machines on Amazon EC2, you need to [register AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html). We will use [Amazon EC2 API Tools](http://aws.amazon.com/developertools/351) to simplify some web operations. Please reference Ubuntu community Wiki ["EC2 Starter's Guide" ](https://help.ubuntu.com/community/EC2StartersGuide) to register account, intall ec2-api-tools and configure environment variables.
-```
+```sh
 ### Install ec2-api-tools on Ubuntu
 ~$ sudo apt-get -y install ec2-api-tools
 ### How to check your ec2-api-tools
@@ -81,7 +81,7 @@ set up your Amazon API credentials. Go to [Account -> Security Credentials](http
 - Create a new Certificate
 - Download the root key and save it in ~/.ec2/rootkey.csv
 - Make your credential files private: chmod go-rwx ~/.ec2/*.csv 
-```
+```sh
 ~$ mkdir -p ~/.ec2
 ### download Access Key Certificates and private key into ~/.ec2
 ~$ chmod go-rwx ~/.ec2/*.csv
@@ -101,7 +101,7 @@ EOF
 ```
 ### "vagrant-aws" plugin
 To run some example vagrant script for AWS EC2, please install vagrant-aws plugin.
-```
+```sh
 ### Install vagrant-aws plugin
 ~$ vagrant plugin install vagrant-aws
 ### How to check installed plugins
@@ -115,18 +115,18 @@ vagrant-share (1.0.1, system)
 -----
 ## Get the source code
 You can check out the source code with following commands
-```
+```sh
 ~$ git clone https://github.com/jazzwang/vagrant-hadoop
 ```
 ## Example 1 : run bigtop example on local virtualbox
 
 The first example is to run BigTop single node Hadoop on AWS EC2.
-```
+```sh
 ~$ cd vagrant-hadoop/bigtop-aws/ubuntu
 ~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant up bigtop1
 ```
 You could login local virtualbox instance with `vagrant ssh`
-```
+```sh
 ~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant ssh bigtop1
 ```
 ## Example 2 : run bigtop example on remote EC2
@@ -136,19 +136,19 @@ You could login local virtualbox instance with `vagrant ssh`
 ~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant up --provider=aws
 ```
 You could get the public ip of your EC2 instances with `ec2-describe-instance-status` command.
-```
+```sh
 ~/vagrant-hadoop/bigtop-aws/ubuntu$ ec2-describe-instance-status
 ```
 You could login remote EC2 instance with `vagrant ssh`
-```
+```sh
 ~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant ssh bigtop2
 ```
 **Note:**
 Please shutdown your EC2 instance after testing with command `vagrant halt`, or it will take USD 0.077 in Singapore region.
-```
+```sh
 ~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant halt bigtop2
 ```
 To complete terminate your EC2 instance, you could use the command `vagrant destroy -f`.
-```
+```sh
 ~/vagrant-hadoop/bigtop-aws/ubuntu$ vagrant destroy -f bigtop2
 ```
