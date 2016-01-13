@@ -1,9 +1,19 @@
 #!/bin/bash
+## install cloudera manager repository ( from /mnt or internet )
+if [ -f /mnt/repodata/repomd.xml ]; then
+  cat > /etc/yum.repos.d/local.repo << EOF
+[local]
+name=local
+baseurl=file:///mnt
+gpgkey=
+enabled=1
+gpgcheck=0
+EOF
+else
+  wget http://archive.cloudera.com/cm5/redhat/6/x86_64/cm/cloudera-manager.repo -O /etc/yum.repos.d/cloudera-manager.repo
+fi
 ## install required packages
 yum -y install epel-release wget tar gzip ntp openssh-clients openssh-server
-## install cloudera manager related packages
-cd /etc/yum.repos.d
-wget http://archive.cloudera.com/cm5/redhat/6/x86_64/cm/cloudera-manager.repo
 yum -y install oracle-j2sdk1.7 cloudera-manager-agent cloudera-manager-server-db-2 cloudera-manager-server
 ## configure JDK 1.7 provided by Cloudera
 ln -s /usr/java/jdk1.7.0_67-cloudera /usr/java/default
@@ -86,3 +96,4 @@ chkconfig vboxadd-x11             off
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRgm+R4LOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== vagrant insecure public key" > /home/vagrant/.ssh/authorized_keys
 ## clean up unneed files
 yum clean all
+if [ -f /etc/yum.repos.d/local.repo ]; then rm /etc/yum.repos.d/local.repo; fi

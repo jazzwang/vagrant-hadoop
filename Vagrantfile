@@ -17,6 +17,7 @@ Vagrant.configure(2) do |config|
   # manage /etc/hosts by hostmanager plugin
   # (https://github.com/smdahlen/vagrant-hostmanager)
   config.hostmanager.enabled = true
+  config.vm.synced_folder "/mnt", "/mnt"
 
   config.vm.define :master1 do |master1|
     master1.vm.provider :virtualbox do |vb|
@@ -31,9 +32,11 @@ Vagrant.configure(2) do |config|
         /etc/init.d/cloudera-scm-agent       clean_restart_confirmed
         /etc/init.d/cloudera-scm-server-db   restart
         /etc/init.d/cloudera-scm-server      restart
+        /etc/init.d/ntpd                     restart
         chkconfig cloudera-scm-agent         on
         chkconfig cloudera-scm-server-db     on
         chkconfig cloudera-scm-server        on
+        chkconfig ntpd                       on
     SHELL
   end
   config.vm.define :master2 do |master2|
@@ -47,7 +50,9 @@ Vagrant.configure(2) do |config|
         sed -i "s#master2 localhost#localhost#g"        /etc/hosts
         sed -i "s#server_host=.*#server_host=master1#g" /etc/cloudera-scm-agent/config.ini
         /etc/init.d/cloudera-scm-agent       clean_restart_confirmed
+        /etc/init.d/ntpd                     restart
         chkconfig cloudera-scm-agent         on
+        chkconfig ntpd                       on
     SHELL
   end
   config.vm.define :worker1 do |worker1|
@@ -61,7 +66,9 @@ Vagrant.configure(2) do |config|
         sed -i "s#worker1 localhost#localhost#g"        /etc/hosts
         sed -i "s#server_host=.*#server_host=master1#g" /etc/cloudera-scm-agent/config.ini
         /etc/init.d/cloudera-scm-agent       clean_restart_confirmed
+        /etc/init.d/ntpd                     restart
         chkconfig cloudera-scm-agent         on
+        chkconfig ntpd                       on
     SHELL
   end
 
