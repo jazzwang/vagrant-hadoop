@@ -3,9 +3,23 @@
 
 # To DRY UP Vagrant File
 # Reference: http://www.element84.com/dry-up-your-vagrant-files.html
-NUM_BOXES = 2
+NUM_BOXES = 3
 
 Vagrant.configure("2") do |config|
+
+  ## Issue:
+  ## Reference:
+  # [1] https://github.com/mitchellh/vagrant/issues/1482
+  # [2] https://www.shell-tips.com/2014/09/08/sudo-sorry-you-must-have-a-tty-to-run-sudo/
+  config.ssh.pty = true
+
+  # force to use "aws" first
+  config.vm.provider "aws"
+  config.vm.provider "virtualbox"
+
+  # enable vagrant-env plugin
+  config.env.enable
+
   # use loop to generate multiple VMs with similar configurations
   (1..NUM_BOXES).each do |i|
     config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -27,6 +41,7 @@ Vagrant.configure("2") do |config|
         aws.region            = "ap-southeast-1"
         aws.instance_type     = "r3.large"
         aws.tags              = { "Name" => "vm#{i}" }
+        aws.block_device_mapping = '[{"DeviceName":"/dev/sda","Ebs": {"VolumeSize":100,"DeleteOnTermination":true,"VolumeType":"gp2"}}]'
 	override.ssh.username = "root"
 	override.ssh.private_key_path = ENV['AWS_KEYPAIR_PATH']
       end
