@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
         aws.region            = "ap-southeast-1"
         aws.instance_type     = "r3.large"
         aws.tags              = { "Name" => "vm#{i}" }
-        aws.block_device_mapping = '[{"DeviceName":"/dev/sda","Ebs": {"VolumeSize":100,"DeleteOnTermination":true,"VolumeType":"gp2"}}]'
+        aws.block_device_mapping = [{ 'DeviceName'=>'/dev/sda1','Ebs.VolumeSize'=>100,'Ebs.DeleteOnTermination'=>true,'Ebs.VolumeType'=>'gp2'}]
 	override.ssh.username = "root"
 	override.ssh.private_key_path = ENV['AWS_KEYPAIR_PATH']
       end
