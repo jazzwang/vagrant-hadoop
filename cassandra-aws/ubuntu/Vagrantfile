@@ -1,0 +1,48 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+NUM_BOXES = 2
+
+Vagrant.configure("2") do |config|
+  # force to use "aws" first
+  config.vm.provider "aws"
+  config.vm.provider "virtualbox"
+  # enable vagrant-env plugin
+  config.env.enable
+  # use loop to generate multiple VMs with similar configurations
+  (1..NUM_BOXES).each do |i|
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.hostmanager.enabled = false
+    config.hostmanager.ip_resolver = proc do |vm, resolving_vm|
+      if vm.id
+      	`aws ec2 describe-instances --query 'Reservations[*].Instances[*].PrivateIpAddress' --instance-ids #{vm.id} --output text`.split()[0]
+      end
+    end
+    config.vm.define "node#{i}".to_sym do |vm1|
+      vm1.vm.box       = "dummy"
+      vm1.vm.box_url   = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
+      vm1.ssh.username = "ubuntu"
+      vm1.vm.provider :aws do |aws, override|
+        aws.access_key_id     = ENV['AWS_ACCESS_KEY']
+        aws.secret_access_key = ENV['AWS_SECRET_KEY']
+        aws.keypair_name = ENV['AWS_KEYPAIR_NAME']
+        # Ubuntu Server 14.04 LTS (HVM)
+        # https://aws.amazon.com/marketplace/pp/B00JV9TBA6
+        # Asia Pacific (Singapore)  ami-36c6ec64
+        aws.ami               = "ami-36c6ec64"
+        aws.region            = "ap-southeast-1"
+        aws.instance_type     = "m3.medium"
+        #aws.tags              = { "Name" => "vm#{i}" }
+        #aws.block_device_mapping = [{ 'DeviceName'=>'/dev/sda1','Ebs.VolumeSize'=>100,'Ebs.DeleteOnTermination'=>true,'Ebs.VolumeType'=>'gp2'}]
+        override.ssh.private_key_path = ENV['AWS_KEYPAIR_PATH']
+      end
+      # Updating /etc/hosts file on active guest machines...
+      config.vm.provision :hostmanager
+      # Provision with Shell Script
+      vm1.vm.provision :shell do |shell|
+	shell.path = "provision.sh"
+	shell.args = "node#{i}"
+      end
+    end
+  end
+end
